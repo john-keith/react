@@ -38,6 +38,7 @@ const createMatcherFor = consoleMethod =>
       }
 
       const withoutStack = options.withoutStack;
+      const logAllErrors = options.logAllErrors;
       const warningsWithoutComponentStack = [];
       const warningsWithComponentStack = [];
       const unexpectedWarnings = [];
@@ -58,6 +59,7 @@ const createMatcherFor = consoleMethod =>
         // Ignore uncaught errors reported by jsdom
         // and React addendums because they're too noisy.
         if (
+          !logAllErrors &&
           consoleMethod === 'error' &&
           shouldIgnoreConsoleError(format, args)
         ) {
@@ -130,7 +132,7 @@ const createMatcherFor = consoleMethod =>
       };
 
       // TODO Decide whether we need to support nested toWarn* expectations.
-      // If we don't need id, add a check here to see if this is already our spy,
+      // If we don't need it, add a check here to see if this is already our spy,
       // And throw an error.
       const originalMethod = console[consoleMethod];
 
